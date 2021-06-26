@@ -1,0 +1,3 @@
+rootProject.name = "Optical Scanner"
+include ':app'
+include ':opticalscannerlib'
