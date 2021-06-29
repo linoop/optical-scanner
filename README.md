@@ -25,7 +25,7 @@ allprojects {
 
 ```gradle
 dependencies {
-	        implementation 'com.github.linoop:optical-scanner:1.0'
+	        implementation 'com.github.linoop:optical-scanner:1.1'
 	}
 ```
 
