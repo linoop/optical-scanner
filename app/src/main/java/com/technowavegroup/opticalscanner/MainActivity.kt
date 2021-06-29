@@ -2,12 +2,7 @@ package com.technowavegroup.opticalscanner
 
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.technowavegroup.opticalscannerlib.BarcodeEditText
@@ -23,11 +18,8 @@ class MainActivity : AppCompatActivity(), BarcodeEditText.BarcodeListener {
         barcodeItem = findViewById(R.id.barcodeItem)
         barcodePrice = findViewById(R.id.barcodePrice)
 
-
-        barcodeItem.setOnBarcodeListener(this)
-        barcodePrice.setOnBarcodeListener { _, barcode ->
-            decodePriceBarcode(barcode)
-        }
+        barcodeItem.setOnBarcodeListener(this, EditorInfo.IME_ACTION_DONE)
+        barcodePrice.setOnBarcodeListener(this, "Ook", EditorInfo.IME_ACTION_GO)
     }
 
 
