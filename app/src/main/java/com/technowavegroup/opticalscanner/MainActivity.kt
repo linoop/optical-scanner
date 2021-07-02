@@ -1,42 +1,48 @@
 package com.technowavegroup.opticalscanner
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.technowavegroup.opticalscannerlib.BarcodeEditText
+import com.technowavegroup.networklib.NetworkUtil
+import com.technowavegroup.printerlib.BTUtil
 
-class MainActivity : AppCompatActivity(), BarcodeEditText.BarcodeListener {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var barcodeItem: BarcodeEditText
-    private lateinit var barcodePrice: BarcodeEditText
+    private lateinit var buttonCheck: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        barcodeItem = findViewById(R.id.barcodeItem)
-        barcodePrice = findViewById(R.id.barcodePrice)
+        buttonCheck = findViewById(R.id.buttonCheck)
 
-        barcodeItem.setOnBarcodeListener(this, EditorInfo.IME_ACTION_DONE)
-        barcodePrice.setOnBarcodeListener(this, "Ook", EditorInfo.IME_ACTION_GO)
+        buttonCheck.setOnClickListener {
+            checkBT()
+        }
     }
 
-
-    private fun decodeItemBarcode(code: String) {
-        Log.d("barcode", code)
-        Toast.makeText(this, "Item $code", Toast.LENGTH_LONG).show()
+    private fun checkBT(){
+        val btUtil=BTUtil(this)
+        btUtil.findBT()
     }
 
-    private fun decodePriceBarcode(code: String) {
-        Log.d("barcode", code)
-        Toast.makeText(this, "Price $code", Toast.LENGTH_LONG).show()
+    private fun checkInternet(){
+        val networkUtil = NetworkUtil(this)
+        if(networkUtil.hasInternetConnection()){
+            Toast.makeText(this,"Internet available",Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this,"Internet not available",Toast.LENGTH_LONG).show()
+        }
     }
 
-    override fun onBarcode(viewId: Int, barcode: String?) {
-        when (viewId) {
-            R.id.barcodeItem -> decodeItemBarcode(barcode!!)
-            R.id.barcodePrice -> decodePriceBarcode(barcode!!)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == BTUtil.BT_ENABLE_REQUEST_CODE) {
+            Toast.makeText(this, "BT enabled", Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this, "BT not enabled", Toast.LENGTH_LONG).show()
         }
     }
 }

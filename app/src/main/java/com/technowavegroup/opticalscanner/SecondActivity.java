@@ -1,7 +1,9 @@
 package com.technowavegroup.opticalscanner;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.EditorInfo;
 
@@ -26,5 +28,10 @@ public class SecondActivity extends AppCompatActivity {
 
             }
         }, "Ook", EditorInfo.IME_ACTION_DONE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
