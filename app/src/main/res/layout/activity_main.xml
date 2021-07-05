@@ -19,9 +19,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/buttonCheck"
-            android:text="Check"/>
+            android:id="@+id/buttonConnect"
+            android:text="Connect"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/buttonChoose"
+            android:text="Choose printer"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/buttonPrint"
+            android:text="Print"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/buttonDisconnect"
+            android:text="Disconnect"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,16 +3,20 @@ package com.technowavegroup.opticalscanner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.EditorInfo;
 
 import com.technowavegroup.opticalscannerlib.BarcodeEditText;
+import com.technowavegroup.printerlib.PrintStatusListener;
 
 public class SecondActivity extends AppCompatActivity {
 
     private BarcodeEditText barcodeItem;
     private BarcodeEditText barcodePrice;
+
+    PrintStatusListener printStatusListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

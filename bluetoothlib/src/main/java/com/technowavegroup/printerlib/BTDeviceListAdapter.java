@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -19,11 +21,13 @@ public class BTDeviceListAdapter extends RecyclerView.Adapter<BTDeviceListAdapte
     private final BTDeviceListDialog context;
     private final List<BluetoothDevice> bluetoothDeviceList;
     private final BTSelectDeviceListener btSelectDeviceListener;
+    private final String macAddress;
 
     public BTDeviceListAdapter(BTDeviceListDialog context, List<BluetoothDevice> bluetoothDeviceList, BTSelectDeviceListener btSelectDeviceListener) {
         this.context = context;
         this.bluetoothDeviceList = bluetoothDeviceList;
         this.btSelectDeviceListener = btSelectDeviceListener;
+        macAddress = SharedPrefManager.getInstance(this.context.getContext()).getPrinterMacAddress();
     }
 
     @NonNull
@@ -37,8 +41,13 @@ public class BTDeviceListAdapter extends RecyclerView.Adapter<BTDeviceListAdapte
     @Override
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull BTDeviceListAdapter.PrinterListViewHolder holder, int position) {
         BluetoothDevice device = bluetoothDeviceList.get(position);
-        holder.textView.setText(device.getName());
-        holder.itemView.setOnClickListener(v -> {
+        holder.textViewPrinterName.setText(device.getName());
+        holder.textViewMac.setText(device.getAddress());
+        if (macAddress.equals(device.getAddress())){
+            holder.cardViewItem.setCardBackgroundColor(context.getContext().getResources().getColor(R.color.colorAccent));
+        }
+        holder.layoutItem.setOnClickListener(v -> {
+            holder.cardViewItem.setCardBackgroundColor(context.getContext().getResources().getColor(R.color.colorAccent));
             btSelectDeviceListener.onBTDeviceSelected(device);
             context.dismiss();
         });
@@ -50,11 +59,16 @@ public class BTDeviceListAdapter extends RecyclerView.Adapter<BTDeviceListAdapte
     }
 
     protected static class PrinterListViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView textViewPrinterName, textViewMac;
+        CardView cardViewItem;
+        ConstraintLayout layoutItem;
 
         public PrinterListViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.printerName);
+            textViewPrinterName = itemView.findViewById(R.id.textViewPrinterName);
+            textViewMac = itemView.findViewById(R.id.textViewMac);
+            cardViewItem = itemView.findViewById(R.id.cardViewItem);
+            layoutItem = itemView.findViewById(R.id.layoutItem);
         }
     }
 }
